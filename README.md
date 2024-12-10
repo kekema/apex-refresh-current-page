@@ -6,3 +6,5 @@ Refreshes the region (Classic Report, Interactive Report, Cards Region or Templa
 The dynamic action typically can be used on 'Dialog Closed' event.
 
 ![image](https://github.com/kekema/apex-refresh-current-page/blob/main/refresh-region-keep-pagination.jpg)
+
+See: [demo page](https://apex.oracle.com/pls/apex/r/yola/demo/employees-refresh)
