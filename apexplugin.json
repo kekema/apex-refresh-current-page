@@ -28,7 +28,7 @@
           "internalName" : "LIB4X.AXT.REGION.REFRESHCURPAGE",
           "type" : "dynamic action",
 	  "demo" : "https://apex.oracle.com/pls/apex/r/yola/demo/employees-refresh",
-	  "previewImage" : "https://github.com/kekema/apex-alternative-date-masks/blob/main/alternative-date-masks-demo.jpg?raw=true"
+	  "previewImage" : "https://github.com/kekema/apex-refresh-current-page/blob/main/refresh-region-keep-pagination.jpg?raw=true"
         }
       }
     }
