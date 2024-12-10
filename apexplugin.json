@@ -1,0 +1,35 @@
+{
+    "name" : "Refresh Region Keep Pagination",
+    "version" : "1.0.0",
+    "description" : "Enables to refresh the current page on a region with pagination. #lib4x",
+    "keywords" : ["Refresh", "Pagination"],
+    "homepage" : "https://github.com/kekema/apex-refresh-current-page",
+    "bugs" : {
+      "url" : "https://github.com/kekema/apex-refresh-current-page/issues",
+      "email" : "karel0008@gmail.com"
+    },
+    "license" : "MIT",
+    "commercial" : "No",
+    "author" : {
+      "name" : "Karel Ekema",
+      "email" : "karel0008@gmail.com",
+      "url" : "https://www.ekema-it.com/",
+      "twitter": "@KarelEkema"
+    },
+    "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/kekema/apex-refresh-current-page"
+    },
+    "oracle" : {
+      "versions": ["19.0.0.0"],	
+      "apex" : {
+        "versions" : ["24.1"],
+        "plugin" : {
+          "internalName" : "LIB4X.AXT.REGION.REFRESHCURPAGE",
+          "type" : "dynamic action",
+	  "demo" : "https://apex.oracle.com/pls/apex/r/yola/demo/employees-refresh",
+	  "previewImage" : "https://github.com/kekema/apex-alternative-date-masks/blob/main/alternative-date-masks-demo.jpg?raw=true"
+        }
+      }
+    }
+}
