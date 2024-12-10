@@ -25,7 +25,7 @@
       "apex" : {
         "versions" : ["24.1"],
         "plugin" : {
-          "internalName" : "LIB4X.AXT.REGION.REFRESHCURPAGE",
+          "internalName" : "LIB4X.AXT.REGION.REFRESHCURRENTPAGE",
           "type" : "dynamic action",
 	  "demo" : "https://apex.oracle.com/pls/apex/r/yola/demo/employees-refresh",
 	  "previewImage" : "https://github.com/kekema/apex-refresh-current-page/blob/main/refresh-region-keep-pagination.jpg?raw=true"
