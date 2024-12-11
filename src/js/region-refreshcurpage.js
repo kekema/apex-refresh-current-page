@@ -279,13 +279,20 @@ lib4x.axt.region.refreshCurrentPage = (function($)
             viewInstance = tc$.tableModelView('instance');
             model = tc$.tableModelView('getModel');
             widget = tc$;
-        }  
+        } 
+        else if (regionType == 'InteractiveGrid')
+        {
+            let gridView = apex.region(regionId).call('getViews').grid;
+            viewInstance = gridView.view$.grid('instance');
+            model = gridView.model;
+            widget = gridView.view$;
+        } 
         if (widget && viewInstance && (viewInstance.pageSize > 0) && model && (model.getTotalRecords() > 0))
         {           
             let pageNumber = Math.ceil( viewInstance.pageOffset / viewInstance.pageSize ); //zero based page number
-            widget.on('tablemodelviewpagechange.lib4xregionrefresh', function(event, data) {
+            widget.on('tablemodelviewpagechange.lib4xregionrefresh, gridpagechange.lib4xregionrefresh', function(event, data) {
                 setTimeout(()=>{
-                    widget.off('tablemodelviewpagechange.lib4xregionrefresh');
+                    widget.off('tablemodelviewpagechange.lib4xregionrefresh, gridpagechange.lib4xregionrefresh');
                     // gotoPage will check for valid page number; 
                     // if not valid anymore, it will remain on page 0
                     viewInstance.gotoPage(pageNumber);
@@ -328,7 +335,7 @@ lib4x.axt.region.refreshCurrentPage = (function($)
                     lib4x.axt.region.ir.refreshCurrentPage(regionId);
                 }
             }
-            else if ((regionType == 'Cards') || (regionType == 'TemplateComponent'))
+            else if ((regionType == 'Cards') || (regionType == 'TemplateComponent') || (regionType == 'InteractiveGrid'))
             {
                 refreshCurrentModelPage(regionId);
             }            
