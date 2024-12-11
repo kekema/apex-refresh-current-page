@@ -1,5 +1,5 @@
 {
-    "name" : "Refresh Region Keep Pagination.",
+    "name" : "Refresh Region Keep Pagination",
     "version" : "1.1.0",
     "description" : "Enables to refresh the current page on a (report) region with pagination. #lib4x",
     "keywords" : ["Refresh Region", "Refresh Report", "Pagination"],
