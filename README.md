@@ -10,3 +10,5 @@ The dynamic action typically can be used on 'Dialog Closed' event.
 ![image](https://github.com/kekema/apex-refresh-current-page/blob/main/refresh-region-keep-pagination.jpg)
 
 See: [demo page](https://apex.oracle.com/pls/apex/r/yola/demo/employees-refresh)
+
+See [here](https://github.com/kekema/apex-refresh-current-page/issues/1) for a backport to 23.1
