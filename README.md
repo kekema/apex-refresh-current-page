@@ -13,4 +13,4 @@ See: [demo page](https://apex.oracle.com/pls/apex/r/yola/demo/employees-refresh)
 
 Plugin developed using APEX 24.1
 
-See [here](https://github.com/kekema/apex-refresh-current-page/issues/1) for a backport to 23.1 contributed by Steffen Clauß.
+See [here](https://github.com/kekema/apex-refresh-current-page/issues/1) for a backport to 23.1 contributed by [Steffen Clauß](https://github.com/scl-4711).
