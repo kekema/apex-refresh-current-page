@@ -14,6 +14,7 @@ See: [demo page](https://apex.oracle.com/pls/apex/r/yola/demo/employees-refresh)
 <h4>Plugin Versions</h4>
 Version 1.0.0 - build under APEX 24.1<br/>
 Version 1.1.0 - build under APEX 24.1<br/>
-Version 1.1.1 - build under APEX 24.2
-
+Version 1.1.1 - build under APEX 24.2<br/>
+<br/>
 See [here](https://github.com/kekema/apex-refresh-current-page/issues/1) for a backport to 23.1 contributed by [Steffen Clauß](https://github.com/scl-4711).
+
