@@ -181,7 +181,7 @@ lib4x.axt.region.refreshCurrentPage = (function($)
                     };
                     if (ajaxIdentifier)
                     {
-                        // <= APEX 23.x (for developers who want to backport the plugin)
+                        // <= APEX 24.1 (for developers who want to backport the plugin)
                         // use internal method - there is no other way
                         apex.widget.report.paginate(internalRegionId, ajaxIdentifier, paginationData);  
                     }
@@ -195,7 +195,7 @@ lib4x.axt.region.refreshCurrentPage = (function($)
             }
             if (doReset)
             {
-                // <= APEX 23.x
+                // <= APEX 24.1
                 // in case 'partial page refresh' has been switched off, it will also land up 
                 // here (ajaxIdentifier null), and the below refresh will have no effect
                 apex.debug.trace('lib4x.axt.report.cr.refreshCurrentPage: fallback on region reset');                
