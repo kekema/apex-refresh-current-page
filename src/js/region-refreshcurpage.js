@@ -165,28 +165,37 @@ lib4x.axt.region.refreshCurrentPage = (function($)
                     ajaxIdentifier = $('#' + regionId + ' .t-Report-pagination tr td a').first().attr('href').match(/'(.*?)'/g)[1].replace(/\'/g, "");
                 }
                 catch (e) {}
-                if (ajaxIdentifier)
+                // get minRow/fetched as derived from any pagination label
+                let currentPagination = getCurrentPagination(regionId, maxRowsToQuery);
+                if (currentPagination)
                 {
-                    // get minRow/fetched as derived from any pagination label
-                    let currentPagination = getCurrentPagination(regionId, maxRowsToQuery);
-                    if (currentPagination)
-                    {
-                        // we got what we need, no feedback required on reset
-                        apex.debug.trace('lib4x.axt.region.cr.refreshCurrentPage: parameters from pagination label taken');
-                        apex.debug.trace('lib4x.axt.region.cr.refreshCurrentPage: call apex.widget.report.paginate');                        
-                        doReset = false;
-                        paginateRefresh = true;
-                        // use internal method - there is no other way
-                        apex.widget.report.paginate(internalRegionId, ajaxIdentifier, {
+                    // we got what we need, no feedback required on reset
+                    apex.debug.trace('lib4x.axt.region.cr.refreshCurrentPage: parameters from pagination label taken');
+                    apex.debug.trace('lib4x.axt.region.cr.refreshCurrentPage: call apex.widget.report.paginate');                        
+                    doReset = false;
+                    paginateRefresh = true;
+                    let paginationData = {
                             min: currentPagination.minRow,
                             max: maxRowsToQuery,
                             fetched: currentPagination.fetched
-                        });                        
+                    };
+                    if (ajaxIdentifier)
+                    {
+                        // <= APEX 23.x (for developers who want to backport the plugin)
+                        // use internal method - there is no other way
+                        apex.widget.report.paginate(internalRegionId, ajaxIdentifier, paginationData);  
                     }
+                    else
+                    {
+                        // later APEX version use the actions framework
+                        // (the links won't have the ajaxIdentifier anymore)
+                        apex.actions.findContextById(regionId).invoke('paginate', null, null, paginationData);
+                    }                      
                 }
             }
             if (doReset)
             {
+                // <= APEX 23.x
                 // in case 'partial page refresh' has been switched off, it will also land up 
                 // here (ajaxIdentifier null), and the below refresh will have no effect
                 apex.debug.trace('lib4x.axt.report.cr.refreshCurrentPage: fallback on region reset');                
@@ -282,10 +291,18 @@ lib4x.axt.region.refreshCurrentPage = (function($)
         } 
         else if (regionType == 'InteractiveGrid')
         {
-            let gridView = apex.region(regionId).call('getViews').grid;
-            viewInstance = gridView.view$.grid('instance');
-            model = gridView.model;
-            widget = gridView.view$;
+            let currentViewId = apex.region(regionId).call('getCurrentViewId');
+            let currentView = apex.region(regionId).call('getCurrentView');
+            if (currentViewId == 'grid')
+            {
+                viewInstance = currentView.view$.grid('instance');
+            }
+            else if ((currentViewId == 'detail') || (currentViewId == 'icon'))
+            {
+                viewInstance = currentView.view$.tableModelView('instance');
+            }
+            model = currentView.model;
+            widget = currentView.view$;                
         } 
         if (widget && viewInstance && (viewInstance.pageSize > 0) && model && (model.getTotalRecords() > 0))
         {           
