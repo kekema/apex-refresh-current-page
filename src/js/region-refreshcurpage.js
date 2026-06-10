@@ -39,42 +39,49 @@ lib4x.axt.region.refreshCurrentPage = (function($)
         $('.t-Region, .t-IRR-region').on('apexbeforerefresh', function(e){
             // backup scrollbar position 
             let regionId = e.currentTarget.id;  
-            let regionBody$ = getRegionBody(e.currentTarget.id);
-            saveScrollTop[regionId] = {window: $(window).scrollTop(), regionBody: regionBody$.scrollTop()};
-            saveScrollLeft[regionId] = {window: $(window).scrollLeft(), regionBody: regionBody$.scrollLeft()};                     
+            let regionType = apex.region(regionId)?.type;
+            if (['ClassicReport', 'InteractiveReport'].includes(regionType))
+            {
+                let regionBody$ = getRegionBody(regionId);
+                saveScrollTop[regionId] = {window: $(window).scrollTop(), regionBody: regionBody$.scrollTop()};
+                saveScrollLeft[regionId] = {window: $(window).scrollLeft(), regionBody: regionBody$.scrollLeft()};     
+            }                
         });
 
         $('.t-Region, .t-IRR-region').on('apexafterrefresh', function(e){
-            if (paginateRefresh)
+            let regionId = e.currentTarget.id;
+            let regionType = apex.region(regionId)?.type;   
+            if (['ClassicReport', 'InteractiveReport'].includes(regionType))
             {
-                // only for paginateRefresh, adjust any scrollbars, not for reset to first page
-                paginateRefresh = false; 
-                let regionId = e.currentTarget.id;   
-                let regionBody$ = getRegionBody(regionId);
-                try {                            
-                    $(window).scrollTop(saveScrollTop[regionId].window);
-                    $(window).scrollLeft(saveScrollLeft[regionId].window);
-                    regionBody$.scrollTop(saveScrollTop[regionId].regionBody);
-                    regionBody$.scrollLeft(saveScrollLeft[regionId].regionBody);
-                } catch(e) {};
-                // check for invalid pagination situation
-                let errorIndicator$ = null;
-                let regionType = apex.region(regionId).type;                
-                if (regionType == 'ClassicReport')
+                if (paginateRefresh)
                 {
-                    errorIndicator$ = $('#' + regionId).find('.apex-tabular-form-error-box');
-                }
-                else if (regionType == 'InteractiveReport')
-                {
-                    errorIndicator$ = $('#' + regionId + '_content').find('.a-IRR-pagination-reset');
-                }
-                if (errorIndicator$.length)
-                {
-                    // this might be when a row was deleted which was the only row on the page
-                    // in ui normally the user gets a message 'invalid set of rows selected'
-                    // and a link as to reset the pagination
-                    // here we do it by region refresh
-                    setTimeout(()=>{apex.region(regionId).refresh();}, 10);
+                    // only for paginateRefresh, adjust any scrollbars, not for reset to first page
+                    paginateRefresh = false;  
+                    let regionBody$ = getRegionBody(regionId);
+                    try {                            
+                        $(window).scrollTop(saveScrollTop[regionId].window);
+                        $(window).scrollLeft(saveScrollLeft[regionId].window);
+                        regionBody$.scrollTop(saveScrollTop[regionId].regionBody);
+                        regionBody$.scrollLeft(saveScrollLeft[regionId].regionBody);
+                    } catch(e) {};
+                    // check for invalid pagination situation
+                    let errorIndicator$ = null;               
+                    if (regionType == 'ClassicReport')
+                    {
+                        errorIndicator$ = $('#' + regionId).find('.apex-tabular-form-error-box');
+                    }
+                    else if (regionType == 'InteractiveReport')
+                    {
+                        errorIndicator$ = $('#' + regionId + '_content').find('.a-IRR-pagination-reset');
+                    }
+                    if (errorIndicator$.length)
+                    {
+                        // this might be when a row was deleted which was the only row on the page
+                        // in ui normally the user gets a message 'invalid set of rows selected'
+                        // and a link as to reset the pagination
+                        // here we do it by region refresh
+                        setTimeout(()=>{apex.region(regionId).refresh();}, 10);
+                    }
                 }
             }
         });       
